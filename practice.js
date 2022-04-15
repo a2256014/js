@@ -293,20 +293,283 @@
 // obj.__proto__ = proto; //상속
 // console.log(obj.x);
 
-function Person(name) {
-  this.name = name;
+// function Person(name) {
+//   this.name = name;
+// }
+
+// const me = new Person("kim"); // me.proto = Person
+// console.dir(me);
+
+// const parent = {
+//   constructor: Person,
+//   sayHi() {
+//     console.log(this.name);
+//   },
+// };
+
+// Person.prototype = parent;
+
+// me.__proto__ = parent;
+// console.dir(me);
+// me.sayHi();
+// console.log(parent instanceof Person);
+// console.log("sayHi" in me);
+
+// for (const key in me) {
+//   console.log(key + " " + me[key]);
+// }
+
+// const arr = [1, 2, 3];
+// arr.forEach((item) => console.log(item));
+// for (const item of arr) {
+//   console.log(item);
+// }
+
+// let num = 1.5;
+// console.log(num.toFixed());
+// console.log(num);
+
+////////////////////////////////////////////// 전역객체
+
+// var x = parseFloat("3.14");
+// var y = parseInt("3.14");
+// console.log(typeof x, x);
+// console.log(typeof y, y);
+// const z = 15;
+// console.log(z.toString(2)); //2진법으로 변환 1111
+
+// const uri = "http://example.com?name=김도균&job=student";
+// const encodingUri = encodeURI(uri);
+// console.log(encodingUri); //url에 들어갈수 없는 것들을 인코딩해줌 (김도균)
+// const decodingUri = decodeURI(encodingUri);
+// console.log(uri);
+
+/////////////////////////////////////////////////this
+
+// const circle = {
+//   radius: 5,
+//   getDiameter() {
+//     return this.radius * 2;
+//   },
+// };
+// console.log(circle.getDiameter());
+
+// console.log(this); //{}가 나옴
+
+// function square(n) {
+//   console.log(this); //일반함수에서 this는 global을 가르킴
+//   return n * n;
+// }
+// square(3);
+
+// const person = {
+//   name: "kimdogyun",
+//   getName() {
+//     console.log(this);
+//     return this.name;
+//   },
+// };
+// console.log(person.getName());
+// //객체안 메서드에서 부르면 this는 객체를 가르킴
+// //생성자 함수는 생성한 인스턴스를 가르킴
+
+// //this는 호출에 따라 동적으로 변환
+// const foo = function () {
+//   console.dir(this);
+// };
+// foo(); //일반함수 호출
+// const obj = { foo };
+// obj.foo(); //매서드 호출
+// new foo(); //생성자 호출
+
+// global.value = 1;
+// const obj = {
+//   value: 100,
+//   foo() {
+//     //////
+//     const that = this; //해결책 this -> that으로
+//     //////
+//     console.log("foo's this : ", this);
+//     console.log("foo's this.value : ", this.value);
+//     //메서드 안에서의 함수(중첩함수)
+//     function bar() {
+//       console.log("bar's this : ", this);
+//       console.log("bar's this.value : ", this.value);
+//     }
+//     //callback 함수도 window 가르킴 / node.js에선 다름
+//     setTimeout(
+//       function () {
+//         console.log("callback's this : ", this);
+//         console.log("callback's this.value : ", this.value);
+//       }.bind(this),
+//       4
+//     ); //2번째 방법
+
+//     setTimeout(() => {
+//       console.log("화살표 this : ", this);
+//       console.log("화살표 this.value : ", this.value);
+//     }, 4); //화살표함수는 함수상위의 this를 참조
+
+//     bar(); //메서드 안 중첩함수를 일반함수호출로 부름 -> this window
+//   },
+// };
+// obj.foo();
+
+// const person = {
+//   name: "dogyun",
+//   getName() {
+//     return this.name;
+//   },
+// };
+// console.log(person.getName());  //dogyun
+
+// const person2 = {
+//   name: "leedoyup",
+// };
+// person2.getName = person.getName;
+// console.log(person2.getName()); //dogyun x ->leedoyup
+// //매서드를 호출한 객체에 바인딩됨
+
+// function getThisBinding() {
+//   return this;
+// }
+// const thisArg = { name: "kim" };
+// console.log(getThisBinding());
+// console.log(getThisBinding.apply(thisArg));
+// console.log(getThisBinding.call(thisArg));
+// //apply call 은 this로 사용할 객체와 인수 전달함
+// console.log(getThisBinding.bind(thisArg)());
+
+////////////////////////////////////실행 컨텍스트
+// const a = {
+//   name: "kim",
+//   foo() {
+//     console.log(this.name);
+//     const b = {
+//       name: this.name,
+//       bar() {
+//         console.log(this.name);
+//         console.log(this);
+//       },
+//     };
+//     b.bar();
+//   },
+// };
+// a.foo();
+
+////////////////////////////////////클로저
+
+// const x = 1;
+// function foo() {
+//   const x = 10;
+//   console.log(x);
+//   bar();
+// }
+// function bar() {
+//   console.log(x);
+// }
+// foo();
+// bar();
+// console.dir(foo);
+
+// const x = 1;
+// function outer() {
+//   const x = 10;
+//   function inner() {
+//     console.log(x);
+//   }
+//   return inner; //반환하고 생명마감
+// }
+// const life = outer(); //inner를 리턴하고 사라진다
+// life(); //하지만 10을 출력한다
+// console.dir(life);
+
+///////활용법
+
+// const counter = (function () {
+//   let num = 0;
+//   return {
+//     increase() {
+//       return ++num;
+//     },
+//     decrease() {
+//       return --num;
+//     },
+//   };
+// })(); //즉시실행 함수
+
+// console.log(counter.increase());
+// console.log(counter.increase());
+// console.log(counter.increase()); //111이 아닌 123 으로 된다.
+// console.log(counter.decrease());
+// console.log(counter.decrease());
+// console.log(counter.decrease());
+
+// const counter = (function () {
+//   let num = 0; //은닉
+//   function Counter() {
+//     return {
+//       increase() {
+//         return ++num;
+//       },
+//       decrease() {
+//         return --num;
+//       },
+//     };
+//   }
+//   return Counter;
+// })(); //즉시 실행함수로 해야 할당됨
+
+// const a = new counter();
+
+// console.log(a.increase());
+
+// function Counter() {
+//   let num = 0;
+//   return {
+//     increase() {
+//       return ++num;
+//     },
+//     decrease() {
+//       return --num;
+//     },
+//   };
+// }
+// const b = new Counter();
+// console.log(b.decrease());
+////////////////////////////////////즉시함수로 만드는 이유 공부
+
+//고차함수
+// const makeCount = (function () {
+//   let count = 0;
+//   return function (oper) {
+//     count = oper(count);
+//     return count;
+//   };
+// })();
+
+// //보조함수
+// function increase(count) {
+//   return ++count;
+// }
+// function decrease(count) {
+//   return --count;
+// }
+
+// //실행
+// console.log(makeCount(increase));
+// console.log(makeCount(increase));
+// console.log(makeCount(decrease));
+// console.log(makeCount(decrease));
+
+//////////////////////////////////////클로저 자주하는 실수
+
+let funcs = [];
+for (let i = 0; i < 3; i++) {
+  funcs[i] = function () {
+    return i;
+  };
 }
-console.dir(Person);
-const me = new Person("kim");
-
-const parent = {
-  constructor: Person,
-  sayHi() {
-    console.log(this.name);
-  },
-};
-
-Person.prototype = parent;
-me.__proto__ = parent;
-me.sayHi();
-console.log(parent instanceof Person);
+for (let j = 0; j < funcs.length; j++) {
+  console.log(funcs[j]());
+}
