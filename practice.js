@@ -113,20 +113,200 @@
 
 /////////////////////////////////////////////////////////////함수
 
-function add(x, y) {
-  return x + y; //함수 선언문
+// function add(x, y) {
+//   return x + y; //함수 선언문
+// }
+// const sum = function (x, y) {
+//   console.log(arguments);
+//   return x + y; //함수 표현식
+// };
+// const test = {
+//   function() {
+//     return 1 + 1;
+//   },
+//   name: "test",
+// };
+// console.dir(add);
+// console.dir(sum);
+// console.log(sum(1, 1, 2, 3));
+// console.log(test.function());
+
+// var res = (function (a, b) {
+//   return a * b; //즉시실행 함수
+// })(3, 5);
+// console.log(res);
+
+// function repeat(n, f) {
+//   for (var i = 0; i < n; i++) {
+//     f(i);
+//   }
+// }
+
+// var logOdd = function (i) {
+//   if (i % 2) console.log(i);
+// };
+
+// repeat(5, logOdd);    //콜백 , 고차함수
+
+///////////////////////////////////////////////스코프
+
+// var x = "global";
+
+// function foo() {
+//   var x = "local";
+//   console.log(x);
+//   function inner() {
+//     var y = "inner local";
+//     console.log(y);
+//     console.log(x && "위도 참조 가능");
+//   }
+//   inner();  //스코프 체인
+// }
+// foo();
+// console.log(x);
+
+// var x = 1;
+// function foo() {
+//   var x = 10;
+//   bar();
+// }
+// function bar() {
+//   console.log(x);
+// }
+
+// foo();
+// bar();
+
+// var Count = (function () {
+//   var num = 0;
+//   return {
+//     increase() {
+//       return ++num;
+//     },
+//     decrease() {
+//       return --num;
+//     },
+//   }; //객체로 반환
+// })(); //즉시 실행 함수로 객체 반환
+
+// console.log(Count.num);
+// console.log(Count.increase());
+// console.log(Count.decrease());
+
+////////////////////////////////////////////////let const 는 블록레벨 스코프를 가짐
+////////////////////////////////////////////////프로퍼티
+
+// const obj = {
+//   name: "kim",
+// };
+// obj.__proto__;
+// console.log(obj.__proto__);
+// console.log(Object.getOwnPropertyDescriptor(obj, "name"));
+// obj.age = 20;
+// console.log(Object.getOwnPropertyDescriptors(obj));
+
+// const Person = {
+//   firstname: "dogyun", //데이터 프로퍼티
+//   lastname: "kim", //데이터 프로퍼티
+
+//   get Fullname() {
+//     return `${this.lastname} ${this.firstname}`;
+//   }, //접근자 프로퍼티
+
+//   set Fullname(name) {
+//     [this.firstname, this.lastname] = name.split(" ");
+//   }, //접근자 프로퍼티
+// };
+
+// console.log(Person.lastname + " " + Person.firstname);
+// Person.Fullname = "Doyup Lee"; // 알아서 set함수로 감 (setter는 접근자 프로퍼티)
+// // Person.Fullname("Doyup Lee"); // 함수 아님 접근자 프로퍼티라 함수로 쓰지말것
+
+// console.log(Person.Fullname); //알아서 get함수로 감 (getter는 접근자 프로퍼티)
+// console.log(Object.getOwnPropertyDescriptor(Person, "Fullname"));
+// console.log(Object.getOwnPropertyDescriptors(Person));
+// console.log(Object.keys(Person));
+
+// function arr(obj) {
+//   Object.keys(obj).forEach((key) => (console.log(obj[key]), console.log(key)));
+// }
+// arr(Person);
+
+//////////////////생성자 함수는 재사용할 때 유용함 ////////////////////////
+
+// function Circle(radius) {
+//   //인스턴스 초기화
+//   console.log(new.target);
+//   this.radius = radius;
+//   this.getDiameter = function () {
+//     return 2 * this.radius;
+//   }; //생성자 함수의 this는 인스턴스(circle)을 가르킴
+// }
+
+// const circle = new Circle(5);
+// console.log(circle);
+// console.log(Object.getOwnPropertyDescriptors(circle));
+
+// function foo() {
+//   console.log(this); //일반 함수는 window,global을 가르킴
+// }
+// foo(); //일반 함수로 호출 this는 전역을 가르킴
+
+// const obj = { foo };
+// obj.foo(); // 매서드로 호출 this는 obj를 가르킴
+
+// const inst = new foo(); //생성자로 호출 this는 inst를 가르킴
+// inst;
+
+/////////////////////////////////////////////////////////////일급 객체
+
+// function a(n) {
+//   console.log(arguments);
+//   res = 0;
+//   for (let i = 0; i < arguments.length; i++) {
+//     res += arguments[i];
+//   }
+//   return res;
+// }
+// console.dir(a);
+// console.log(a());
+// console.log(a(1));
+// console.log(a(1, 2));
+
+////////////////////////////////////////////////////////프로토타입
+
+// function Circle(radius) {
+//   this.radius = radius;
+// }
+// Circle.prototype.getArea = function (radius) {
+//   return this.radius ** 2 * 3.14;
+// };
+
+// const circle1 = new Circle(4);
+// const circle2 = new Circle(4);
+// console.log(Circle);
+// console.log(circle1.getArea === circle2.getArea); //포로토타입 매서드는 공유한다.(중복제거)
+// console.log(Circle.__proto__);
+
+// const obj = {};
+// const proto = { x: 1 };
+// obj.__proto__ = proto; //상속
+// console.log(obj.x);
+
+function Person(name) {
+  this.name = name;
 }
-const sum = function (x, y) {
-  console.log(arguments);
-  return x + y; //함수 표현식
-};
-const test = {
-  function() {
-    return 1 + 1;
+console.dir(Person);
+const me = new Person("kim");
+
+const parent = {
+  constructor: Person,
+  sayHi() {
+    console.log(this.name);
   },
-  name: "test",
 };
-console.dir(add);
-console.dir(sum);
-console.log(sum(1, 1, 2, 3));
-console.log(test.function());
+
+Person.prototype = parent;
+me.__proto__ = parent;
+me.sayHi();
+console.log(parent instanceof Person);
