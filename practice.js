@@ -564,12 +564,82 @@
 
 //////////////////////////////////////클로저 자주하는 실수
 
-let funcs = [];
-for (let i = 0; i < 3; i++) {
-  funcs[i] = function () {
-    return i;
-  };
+// let funcs = [];
+// for (let i = 0; i < 3; i++) {
+//   funcs[i] = function () {
+//     return i;
+//   };
+// }
+// for (let j = 0; j < funcs.length; j++) {
+//   console.log(funcs[j]());
+// }
+
+/////////////////////////////////////////class
+
+// class Person {
+//   constructor(name) {
+//     this.name = name;
+//     //return this 암묵적으로 반환함
+//     // return {} // this가 반환안되고 {}가 반환됨
+//   } //생성자 메서드
+//   sayHi() {
+//     console.log(`hi ${this.name}`);
+//   }
+//   static sayHello() {
+//     console.log("hello");
+//   }
+// }
+
+// const me = new Person("kim");
+// me.sayHi();
+// Person.sayHello(); //class 고유 정적메서드
+// console.log(Object.getPrototypeOf(me) === Person.prototype);
+// console.log(Person.prototype);
+// Object.getPrototypeOf(me).sayHi();
+//메서드this는 자길 호출한 객체에 바인딩됨
+
+/////////////////////////////////////constructor는 생성자 함수
+
+// class People {
+//   name = "lee";
+
+//   getName = function () {
+//     return this.name;
+//   };
+// }
+// const you = new People();
+// console.log(you.getName());
+
+////////////////////////////////////상속
+
+class Animal {
+  constructor(age, weight) {
+    this.age = age;
+    this.weight = weight;
+  }
+  move() {
+    console.log("move");
+  }
+  eat() {
+    console.log("eat");
+  }
 }
-for (let j = 0; j < funcs.length; j++) {
-  console.log(funcs[j]());
+
+class Bird extends Animal {
+  constructor(name, ...arg) {
+    super(...arg);
+    this.name = name;
+  }
+  move() {
+    super.move();
+    console.log("fly");
+  }
 }
+
+const bird = new Bird("rain", 1, 5);
+bird.eat();
+bird.move();
+console.log(bird.name);
+console.log(bird);
+
+console.log(bird instanceof Animal); //true
