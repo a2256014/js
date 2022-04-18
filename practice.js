@@ -612,34 +612,387 @@
 
 ////////////////////////////////////상속
 
-class Animal {
-  constructor(age, weight) {
-    this.age = age;
-    this.weight = weight;
-  }
-  move() {
-    console.log("move");
-  }
-  eat() {
-    console.log("eat");
-  }
-}
+// class Animal {
+//   constructor(age, weight) {
+//     this.age = age;
+//     this.weight = weight;
+//   }
+//   move() {
+//     console.log("move");
+//   }
+//   eat() {
+//     console.log("eat");
+//   }
+// }
 
-class Bird extends Animal {
-  constructor(name, ...arg) {
-    super(...arg);
-    this.name = name;
-  }
-  move() {
-    super.move();
-    console.log("fly");
-  }
-}
+// class Bird extends Animal {
+//   constructor(name, ...arg) {
+//     super(...arg);
+//     this.name = name;
+//   }
+//   move() {
+//     super.move();
+//     console.log("fly");
+//   }
+// }
 
-const bird = new Bird("rain", 1, 5);
-bird.eat();
-bird.move();
-console.log(bird.name);
-console.log(bird);
+// const bird = new Bird("rain", 1, 5);
+// bird.eat();
+// bird.move();
+// console.log(bird.name);
+// console.log(bird);
 
-console.log(bird instanceof Animal); //true
+// console.log(bird instanceof Animal); //true
+
+// const obj = {
+//   foo() {
+//     return console.log("method");
+//   },
+// };
+// console.log(obj.foo());
+
+// const obj = (name, ...rest) => {
+//   this.name = name;
+
+//   output = () => {
+//     console.log(this);
+//     console.log(this.name);
+//     console.log(this.rest);
+//   };
+//   output();
+// };
+// obj("kim", 1, 2, 3, 4);
+
+///////////////////////////////////////////////////////배열
+
+// arr = [1, 2, 3];
+// console.log(arr.length);
+// for (let i = 0; i < arr.length; i++) {
+//   console.log(arr[i]);
+// }
+
+// arr1 = [];
+// arr1.push(1);
+// console.log(arr1);
+
+// arr2 = Array.from("hello");
+// console.log(arr2);
+// arr2.splice(2, arr2.length - 1);
+// console.log(arr2);
+// arr2.indexOf("h");
+// console.log('arr2.indexOf("h"): ', arr2.indexOf("h"));
+// arr2.includes("e");
+// console.log('arr2.includes("e"): ', arr2.includes("e"));
+
+// //추가
+// arr2[arr2.length] = "me";
+// arr3 = [...arr2, "push"];
+// console.log("arr3: ", arr3);
+// arr3.unshift("left"); //왼쪽 삽입
+// console.log("arr3: ", arr3);
+// arr3.shift();
+// console.log("arr3: ", arr3); //왼쪽 제거
+
+// arr4 = [...arr1, ...arr2, ...arr3];
+// console.log("arr4: ", arr4);
+
+// console.log("arr4.join(): ", arr4.join());
+// console.log('arr4.join(""): ', arr4.join(""));
+// console.log('arr4.join(" "): ', arr4.join(" "));
+
+// arr5 = [];
+// arr5.length = 10;
+// arr5.fill(1);
+// console.log("arr5: ", arr5);
+
+// const sequense = (length = 0) => {
+//   return Array.from({ length }, (_, i) => i);
+// };
+// arr6 = sequense(5);
+// console.log("arr6: ", arr6);
+
+// console.log(typeof arr6);
+// arr6.sort((a, b) => b - a);
+// console.log("arr6: ", arr6);
+
+// const todo = [
+//   { id: 1, content: "css" },
+//   { id: 2, content: "html" },
+//   { id: 3, content: "react" },
+// ];
+
+// const compare = (key) => {
+//   return (a, b) => (a[key] < b[key] ? 1 : -1);
+// };
+
+// todo.sort(compare("content"));
+// console.log("todo: ", todo);
+
+// pow = [];
+// arr6.forEach((item) => pow.push(item ** 2)); //foreach는 항상 undefine 반환
+// console.log("pow: ", pow);
+
+// sqrt = [];
+// sqrt = pow.map((item) => Math.sqrt(item)); //새로운 배열 반환
+// console.log("sqrt: ", sqrt);
+
+// binary = [];
+// binary = sqrt.filter((item) => item % 2 === 0);
+// console.log("binary: ", binary);
+
+// const sum = binary.reduce((accumulator, currentValue, index, array) => {
+//   console.log(
+//     "accumulator, currentValue, index, array: ",
+//     accumulator,
+//     currentValue,
+//     index,
+//     array
+//   );
+//   return accumulator + currentValue;
+// }, 0);
+// console.log("sum: ", sum);
+
+// const sequence = (length = 0) => {
+//   return Array.from({ length }, (_, i) => i);
+// };
+// values = sequence(7);
+// console.log("values: ", values);
+// const average = values.reduce((acc, cur, idx, arr) => {
+//   console.log("acc,cur,idx,arr: ", acc, cur, idx, arr);
+//   return idx === arr.length - 1 ? (acc + cur) / arr.length : acc + cur;
+// }, 0);
+// console.log("average: ", average);
+
+// firstname = ["kim", "lee", "park", "park", "park", "kim", "lee"];
+// const count = firstname.reduce((acc, cur) => {
+//   console.log("acc, cur: ", acc, cur);
+//   acc[cur] = (acc[cur] || 0) + 1;
+//   return acc;
+// }, {});
+// console.log("count: ", count);
+
+// const values1 = [1, [2, 3, [4, 5], [6, 7]], [8, 9], 10];
+// console.log("values1: ", values1);
+// console.log("values1.flat(3): ", values1.flat(3));
+// //중복제거
+// const values2 = [1, 1, 1, 1, 2, 2, 3, 3, 3, 6, 6, 7];
+// const result = values2.reduce((acc, cur, i, arr) => {
+//   if (arr.indexOf(cur) === i) acc.push(cur);
+//   return acc;
+// }, []);
+// console.log("result: ", result);
+
+// const result2 = values2.filter(
+//   (value, index, arr) => arr.indexOf(value) === index
+// );
+// console.log("result2: ", result2);
+
+// console.log(
+//   "[1,5,15].some(item=>item>10): ",
+//   [1, 5, 15].some((item) => item > 10)
+// );
+
+// console.log(
+//   "[1,5,10].every(item=>item>10): ",
+//   [1, 5, 10].every((item) => item <= 10)
+// );
+
+/////////////////////////////////////////////////////Number
+
+// const isEqual = (a, b) => {
+//   return Math.abs(a - b) < Number.EPSILON;
+// };
+// console.log("isEqual(0.1+0.2,0.3): ", isEqual(0.1 + 0.2, 0.3));
+
+// console.log("Number.isInteger(1.0): ", Number.isInteger(1.0));
+
+// console.log("123.456.toFixed(3): ", (123.456).toFixed(1));
+
+// console.log("(9).toString(2): ", (9).toString(2));
+
+///////////////////////////////////////////////////////Math
+//round 반올림
+//ceil  올림
+//floor 내림
+//abs,sqrt,random,pow,max,min
+
+///////////////////////////////////////////////////////Date
+
+// console.log("new Date(): ", new Date());
+
+// console.log("Date(): ", Date());
+
+// console.log("new Date(60000): ", new Date(60000));
+
+///////////////////////////////////////////////////////정규표현식
+
+// const tel = "010-8888-9999";
+// const reg = /^\d{3}-\d{4}-\d{4}$/;
+// console.log("reg.test(tel): ", reg.test(tel));
+
+// const target = "Is this all there is?";
+// const reg1 = /is/gi;
+
+// console.log("reg1.exec(target): ", reg1.exec(target));
+// console.log("target.match(reg1): ", target.match(reg1));
+
+// flag =  i = ignorecase 대소문자 구분 안함
+//         g = global     전역검색
+//         m = multi line 여러줄
+// pattern
+
+// /.../ 임의의 3자리
+// /A{1,2}/g A가 최소 1번 최대 2번 반복확인
+// /A{2}/  A가 2번 반복되는지 확인
+// /A{2,}/ A가 최소 2번 반복
+// /A+/  A가 최소 한번
+// /?/   {0,1}과 같음
+// /A|B/ A혹은 B
+// /A+|B+/===/[AB]+/
+// /[A-Z]+/  A AA AAA ... Z ZZ ZZZ...
+// const reg2 = /[A-Za-z]+/g;
+// const target1 = "A aa AA Bb b B Bb b";
+// console.log("target1.match(reg2): ", target1.match(reg2));
+
+// [0-9]+ === [\d] [\D] 숫자가 아닌거
+// [\w]  알파벳 숫자 _ [\W]
+// [^0-9]===[\D]
+// /^/ 시작위치
+// /$/ 마지막위치
+// [\s]  공백
+
+///////////////////////////////////////////////////////string
+
+// const str = "Hello Kim";
+// console.log('str.indexOf("H"): ', str.indexOf("o"));
+// console.log('str.includes("lee"): ', str.includes("lee"));
+// console.log("str.search(/^[a-z]/g): ", str.search(/^[a-zA-Z]+/g));
+// console.log("str.substring(1,4): ", str.substring(1, 4));
+
+// const str1 = "12agd34asd22";
+// str.replace(/[^a-zA-Z]/g, "");
+// console.log('str.replace(/[^a-zA-Z]/g,""): ', str1.replace(/[^a-zA-Z]/g, ""));
+
+// const camelCase = (string) => {
+//   return string.replace(/.[A-Z]/g, (match) => {
+//     console.log(match);
+//     return match[0] + "_" + match[1].toLowerCase();
+//   });
+// };
+// console.log('camelCase("meFind");: ', camelCase("meFind"));
+
+// const snakeCase = (string) => {
+//   return string.replace(/._./g, (match) => {
+//     console.log(match);
+//     return match[0] + match[2].toUpperCase();
+//   });
+// };
+// console.log('snakeCase("me_find"): ', snakeCase("me_find"));
+
+// const reverseCase = (string) => {
+//   return string.split("").reverse().join("");
+// };
+// console.log('reverseCase("Hello World"): ', reverseCase("Hello World"));
+
+///////////////////////////////////////////////////////symbol
+
+// const s1 = Symbol("mySymbol");
+// Symbol.keyFor(s1);
+// console.log("Symbol.keyfor(s1): ", Symbol.keyFor(s1));
+
+// const Oper = {
+//   UP: Symbol("up"),
+//   DOWN: Symbol("down"),
+//   RIGHT: Symbol("right"),
+//   LEFT: Symbol("left"),
+// };
+
+// const myDirection = Oper.DOWN;
+// console.log(Symbol.for("down"));
+
+///////////////////////////////////////////////////////이터러블
+
+// array = [1, 2, 3];
+// console.log(...array); //스프레드
+// const rest = (...arr) => {
+//   //rest
+//   console.log(arr);
+// };
+// rest(1, 2, 3);
+
+// for (const item of array) {
+//   console.log(item);
+// }
+
+// const iterator = array[Symbol.iterator]();
+// console.log(iterator.next());
+// console.log(iterator.next());
+// console.log(iterator.next());
+
+// const fibonacci = (max) => {
+//   let [pre, cur] = [0, 1];
+//   return {
+//     [Symbol.iterator]() {
+//       return {
+//         next() {
+//           [pre, cur] = [cur, cur + pre];
+//           return { value: cur, done: cur >= max };
+//         },
+//       };
+//     },
+//   };
+// };
+// for (const item of fibonacci(10)) {
+//   console.log(item);
+// }
+
+///////////////////////////////////////////////////////디스트럭처링 할당
+
+// const parseUrl = (url = "") => {
+//   const parsedUrl = url.match(/(^\w+):\/\/([^/]+)\/(.*)$/);
+//   console.log(parsedUrl);
+//   [, protocol, host, path] = parsedUrl; //디스트럭처링
+//   return { protocol, host, path };
+// };
+
+// const parsedUrl = parseUrl(
+//   "https://www.delftstack.com/ko/howto/python/is -int-or-not-python/"
+// );
+// console.log("parsedUrl: ", parsedUrl);
+
+// const user = {
+//   firstName: "Kim",
+//   lastName: "dogyun",
+// };
+// const { firstName: fn, lastName: ln } = user; //객체 디스트럭처링
+// console.log(fn, ln);
+
+// const todo = [
+//   { id: 1, name: "kim", address: { zipCode: 10, city: "seoul" } },
+//   { id: 2, name: "lee", address: { zipCode: 10, city: "busan" } },
+//   { id: 3, name: "park", address: { zipCode: 10, city: "kyunggi" } },
+// ];
+
+// const [
+//   ,
+//   {
+//     id,
+//     address: { city: g },
+//   },
+// ] = todo;
+// console.log(id, g);
+
+///////////////////////////////////////////////////////set map
+
+// const set = new Set([1, 3, 2]);
+// console.log("set: ", set);
+
+// //중복제거
+// const array = [1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 4, 5, 7, 7, 7, 8, 9, 9];
+// const uniq = array.filter((value, index, arr) => arr.indexOf(value) === index);
+// const uniq2 = [...new Set(array)];
+// console.log("uniq: ", uniq);
+// console.log("uniq2: ", uniq2);
+//add has delete
+// intersection union difference
+// entries
