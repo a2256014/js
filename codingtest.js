@@ -70,3 +70,198 @@
 // ];
 // const moves = [1, 5, 3, 5, 1, 2, 1, 4];
 // console.log("solution(board, moves);: ", solution(board, moves));
+
+// const convet = (collect) => {
+//   for (item in collect) {
+//     console.log("key = " + item + " value = " + collect[item]);
+//   }
+// };
+
+// const dict = { a: 1, b: 2, c: 3 };
+// convet(dict);
+
+// function add(num) {
+//   const addNext = function (x) {
+//     return add(num + x);
+//   };
+//   addNext.valueOf = function () {
+//     return num;
+//   };
+//   return addNext;
+// }
+
+// const _sum = add(1)(2)(3);
+// console.log("_sum: ", _sum);
+
+// const move = (current, nextnum) => {
+//   keypad = {
+//     1: [0, 0],
+//     2: [0, 1],
+//     3: [0, 2],
+//     4: [1, 0],
+//     5: [1, 1],
+//     6: [1, 2],
+//     7: [2, 0],
+//     8: [2, 1],
+//     9: [2, 2],
+//     "*": [3, 0],
+//     0: [3, 1],
+//     "#": [3, 2],
+//   };
+//   const dist = distance(keypad[current], keypad[nextnum]);
+//   return dist;
+// };
+
+// const distance = (current, nextnum) => {
+//   const x = Math.abs(current[0] - nextnum[0]);
+//   const y = Math.abs(current[1] - nextnum[1]);
+//   return x + y;
+// };
+
+// const solution = (numbers, hand) => {
+//   let answer = "";
+//   let right = "#";
+//   let left = "*";
+
+//   for (const n of numbers) {
+//     if ([1, 4, 7].includes(n)) {
+//       left = n;
+//       answer += "L";
+//     } else if ([3, 6, 9].includes(n)) {
+//       right = n;
+//       answer += "R";
+//     } else {
+//       const rdist = move(right, n);
+//       const ldist = move(left, n);
+//       if (rdist === ldist) {
+//         if (hand === "right") {
+//           answer += "R";
+//           right = n;
+//         } else {
+//           answer += "L";
+//           left = n;
+//         }
+//       } else {
+//         if (rdist < ldist) {
+//           answer += "R";
+//           right = n;
+//         } else {
+//           answer += "L";
+//           left = n;
+//         }
+//       }
+//     }
+//   }
+
+//   return answer;
+// };
+
+// console.log(
+//   'solution([1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5], "right");: ',
+//   solution([1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5], "right")
+// );
+
+// const solution = (a, b) => {
+//   let answer = 0;
+
+//   for (let i = 0; i < a.length; i++) {
+//     answer += a[i] * b[i];
+//   }
+//   return answer;
+// };
+
+// console.log(solution([1, 2, 3, 4], [-3, -1, 0, 2]));
+
+// const getCombination = (arr, select) => {
+//   const result = [];
+//   if (select === 1) {
+//     return arr.map((item) => [item]);
+//   }
+//   arr.forEach((v, i, arr) => {
+//     const rest = arr.slice(i + 1);
+//     const combination = getCombination(rest, select - 1);
+//     const attach = combination.map((item) => [v, ...item]);
+//     result.push(...attach);
+//   });
+//   return result;
+// };
+
+// console.log(getCombination([1, 2, 3, 4], 3));
+
+// const solution = (N, stage) => {
+//   let answer = [];
+//   let user = stage.length;
+//   let stageUser = {};
+//   let probability = [];
+//   stage.forEach((item) => {
+//     stageUser[item] = stageUser[item] + 1 || 1;
+//   });
+//   for (let i = 1; i <= N; i++) {
+//     probability.push([i, stageUser[i] / user || 0]);
+//     user -= stageUser[i] || 0;
+//   }
+//   probability.sort((a, b) => {
+//     return b[1] - a[1];
+//   });
+//   probability.forEach((item) => answer.push(item[0]));
+//   console.log(answer);
+//   return answer;
+// };
+
+// solution(5, [2, 1, 2, 6, 2, 4, 3, 3]);
+// solution(4, [4, 4, 4, 4, 4]);
+
+// const solution = (n) => {
+//   let answer = 0;
+
+//   answer = parseInt(n.toString(3).split("").reverse().join(""), 3);
+
+//   return answer;
+// };
+// solution(45);
+
+// const solution = (d, budget) => {
+//   let answer = 0;
+
+//   d.sort((a, b) => {
+//     return a - b;
+//   });
+
+//   for (let i of d) {
+//     if (budget - i >= 0) {
+//       answer += 1;
+//       budget -= i;
+//     } else {
+//       break;
+//     }
+//   }
+//   console.log(answer);
+//   return answer;
+// };
+// solution([1, 3, 2, 5, 4], 9);
+
+// const getCombination = (arr, n) => {
+//   const result = [];
+//   if (n == 1) {
+//     return arr.map((item) => [item]);
+//   }
+//   arr.forEach((v, i, arr) => {
+//     const rest = arr.slice(i + 1);
+//     const combination = getCombination(rest, n - 1);
+//     const attach = combination.map((item) => [v, ...item]);
+//     result.push(...attach);
+//   });
+//   return result;
+// };
+
+// const solution = (n) => {
+//   let answer = [];
+//   const combi = getCombination(n, 2);
+//   combi.forEach((item) => {
+//     const _sum = item[0] + item[1];
+//     if (!answer.includes(_sum)) answer.push(_sum);
+//   });
+
+//   return answer.sort((a,b)=>{return a-b});
+// };
+// solution([2, 1, 3, 4, 1]);
