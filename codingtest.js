@@ -316,5 +316,72 @@
 // }
 // console.log(solution("()))((()"));
 
-const user = { name: "kim", age: 20 };
-console.log(user);
+// const user = { name: "kim", age: 20 };
+// console.log(user);
+
+const getCombination = (arr, n) => {
+  const combination = [];
+  if (n === 1) {
+    return arr.map((item) => [item]);
+  }
+  arr.forEach((item, index, array) => {
+    const rest = [...array.slice(0, index), ...array.slice(index + 1)];
+    const combi = getCombination(rest, n - 1);
+    const attach = combi.map((v) => [item, ...v]);
+    combination.push(...attach);
+  });
+
+  return combination;
+};
+
+const operation = (a, b, oper) => {
+  let num;
+  switch (oper) {
+    case "+":
+      num = a + b;
+      break;
+
+    case "-":
+      num = a - b;
+      break;
+
+    case "*":
+      num = a * b;
+      break;
+  }
+  return num;
+};
+
+function solution(expression) {
+  var answer = 0;
+  const arr = ["+", "-", "*"];
+  const oper = getCombination(arr, 3);
+  const num = expression.split(/[\+\-\*]/);
+  const command = expression.split(/[0-9]{1,}/).filter((item) => item !== "");
+  const cnum = [];
+  const result = [];
+
+  for (let i = 0; i < command.length; i++) {
+    cnum.push(num[i], command[i]);
+  }
+  cnum.push(num[num.length - 1]);
+
+  for (c of oper) {
+    const number = [...cnum];
+    c.forEach((o) => {
+      while (number.includes(o)) {
+        const index = number.indexOf(o);
+        number.splice(
+          index - 1,
+          3,
+          operation(number[index - 1] / 1, number[index + 1] / 1, o)
+        );
+      }
+    });
+    result.push(Math.abs(number[0]));
+  }
+  answer = Math.max(...result);
+  console.log(answer);
+  return answer;
+}
+solution("100-200*300-500+20");
