@@ -5,21 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script src="./async/async.js"></script>
   </head>
-  <body>
-    <button class="btn">0</button>
-    <script>
-      class App {
-        constructor() {
-          this.$button = document.querySelector(".btn");
-          this.count = 0;
-          this.$button.onclick = this.increase;
-        }
-        increase = () => {
-          this.$button.textContent = ++this.count;
-        };
-      }
-      new App();
-    </script>
-  </body>
+  <body class="h" id="h"></body>
 </html>

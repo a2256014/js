@@ -996,3 +996,20 @@
 //add has delete
 // intersection union difference
 // entries
+
+// class Person {
+//   constructor(first, last, age) {
+//     this.first = first;
+//     this.last = last;
+//     this.age = age;
+//   }
+
+//   get age() {
+//     return this.age;
+//   }
+//   set age(value) {
+//     this.age = value < 0 ? 0 : value;
+//   }
+// }
+// const user = new Person("kim", "dogyun", 26);
+// console.log(user);

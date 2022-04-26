@@ -36,7 +36,7 @@
 //     const len = answer.length;
 //     return len > 2 ? answer : answer + answer.charAt(len - 1).repeat(3 - len);
 // }
-//[]or  \특수기호   |or     ()그룹검색  ?최대 한번  *있거나없음
+// []or  \특수기호   |or     ()그룹검색  ?최대 한번  *있거나없음
 
 // function solution(board, moves) {
 //   var count = 0;
@@ -265,3 +265,56 @@
 //   return answer.sort((a,b)=>{return a-b});
 // };
 // solution([2, 1, 3, 4, 1]);
+
+// const collect = (string) => {
+//   const stack = [];
+//   let bool = true;
+//   for (let i = 0; i < string.length; i++) {
+//     string[i] === "("
+//       ? stack.push(string[i])
+//       : stack.length === 0
+//       ? (bool = false)
+//       : stack.pop();
+//   }
+//   return bool;
+// };
+
+// function solution(p) {
+//   let w = p;
+
+//   if (!w) return w;
+
+//   let count = 0;
+//   let u = "";
+//   let v = "";
+//   for (let i = 0; i < w.length; i++) {
+//     if (w[i] === "(") {
+//       count += 1;
+//     } else {
+//       count -= 1;
+//     }
+//     if (count === 0) {
+//       u = w.slice(0, i + 1);
+//       v = w.slice(i + 1);
+//       break;
+//     }
+//   }
+
+//   if (collect(u)) {
+//     return (u += solution(v));
+//   } else {
+//     let tmp = "(";
+//     tmp += solution(v);
+//     tmp += ")";
+//     u.slice(1, u.length - 1)
+//       .split("")
+//       .forEach((item) => {
+//         item === "(" ? (tmp += ")") : (tmp += "(");
+//       });
+//     return tmp;
+//   }
+// }
+// console.log(solution("()))((()"));
+
+const user = { name: "kim", age: 20 };
+console.log(user);
