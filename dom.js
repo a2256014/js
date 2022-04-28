@@ -4,10 +4,7 @@ let root_div = document.getElementById("root");
 
 const Home = () => {
   const $div = root_div.getElementsByTagName("div");
-  if ($div) {
-    [...$div].forEach((div) => root_div.removeChild(div));
-  }
-  console.log(...$div);
+
   let div = document.createElement("div");
   let link = document.createElement("a");
   link.href = "#/about";
@@ -21,9 +18,7 @@ const Home = () => {
 
 const About = () => {
   const $div = root_div.getElementsByTagName("div");
-  if ($div) {
-    [...$div].forEach((div) => root_div.removeChild(div));
-  }
+
   let div = document.createElement("div");
   let link = document.createElement("a");
   link.href = "#/";
@@ -76,3 +71,12 @@ const router = (evt) => {
 
 window.addEventListener("load", router);
 window.addEventListener("hashchange", router);
+
+const $div = root_div.querySelectorAll("div");
+[...$div].forEach((item, i, arr) => {
+  const n_div = document.createElement("div");
+  n_div.innerText = "추가";
+  // root_div.append(n_div);
+  item.append(n_div);
+});
+[...root_div.children].forEach((v) => console.log(v));
