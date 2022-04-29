@@ -17,7 +17,8 @@ function App($app) {
   this.setState = (nextState) => {
     this.state = nextState;
     nav.setState(this.state.direct);
-    node.setState({ isRoot: this.state.isRoot, nodes: this.state.nodes });
+    node.setState({ isRoot: this.state.isRoot, 
+      nodes: this.state.nodes });
     image.setState(this.state.isView);
     loading.setState(this.state.isLoading);
   };
