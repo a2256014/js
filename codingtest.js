@@ -1357,48 +1357,812 @@
 //   return answer; // 결과 반환
 // }
 
-var answer = 0;
-const BFS = (visited, n, Row, count) => {
-  console.log(visited);
-  if (count === 4) {
-    answer++;
-    return;
+// var answer = 0;
+// const BFS = (visited, n, Row, count) => {
+//   console.log(visited);
+//   if (count === 4) {
+//     answer++;
+//     return;
+//   }
+//   for (let column = 0; column < n; column++) {
+//     if (!visited[Row][column]) {
+//       visited[Row][column] = true;
+//       for (let i = 0; i < n; i++) {
+//         visited[i][column] = true;
+//         if (Row + i !== n && column + i !== n) {
+//           visited[Row + i][column + i] = true;
+//         } else if (Row + i !== n && column !== 0) {
+//           visited[Row + i][column - i] = true;
+//         } else if (Row !== 0 && column + i !== n) {
+//           visited[Row - i][column + i] = true;
+//         } else if (Row !== 0 && column !== 0) {
+//           visited[Row - i][column - i] = true;
+//         }
+//       }
+//       BFS(visited, n, Row + 1, count + 1);
+//       for (let i = 0; i < n; i++) {
+//         visited[i][column] = false;
+//         if (Row + i !== n && column + i !== n) {
+//           visited[Row + i][column + i] = false;
+//         } else if (Row + i !== n && column !== 0) {
+//           visited[Row + i][column - i] = false;
+//         } else if (Row !== 0 && column + i !== n) {
+//           visited[Row - i][column + i] = false;
+//         } else if (Row !== 0 && column !== 0) {
+//           visited[Row - i][column - i] = false;
+//         }
+//       }
+//     }
+//   }
+//   return;
+// };
+// function solution(n) {
+//   //무조건 각 줄에 한개씩
+//   const visited = Array(n).fill(Array(n).fill(false));
+//   BFS(visited, n, 0, 0);
+// }
+// solution(4);
+
+//////////////////////////front와 rear로 탐색 => 선형큐도 만들 수 있다
+// class Queue {
+//   constructor() {
+//     this.queue = [];
+//     this.front = 0;
+//     this.rear = 0;
+//   }
+//   enqueue(value) {
+//     this.queue[this.rear++] = value;
+//   }
+//   dequeue() {
+//     const returnValue = this.queue[this.front];
+//     delete this.queue[this.front];
+//     this.front++;
+//     return returnValue;
+//   }
+//   isEmpty() {
+//     return this.front === this.rear;
+//   }
+//   isSize() {
+//     return this.rear - this.front;
+//   }
+// }
+
+// const solution = (p, l) => {
+//   const queue = new Queue();
+//   let count = 0;
+
+//   p.forEach((item, index) => {
+//     queue.enqueue([item, index]);
+//   });
+//   p.sort((a, b) => a - b);
+
+//   while (true) {
+//     const cur = queue.dequeue();
+
+//     if (cur[0] === p[p.length - 1]) {
+//       count++;
+//       p.pop();
+//       if (cur[1] === l) {
+//         break;
+//       }
+//     } else {
+//       queue.enqueue(cur);
+//     }
+//   }
+
+//   return count;
+// };
+// console.log(solution([2, 1, 3, 2], 2));
+
+// class Node {
+//   constructor(value) {
+//     this.value = value;
+//     this.next = null;
+//   }
+// }
+// class LinkedList {
+//   constructor() {
+//     this.head = null;
+//     this.tail = null;
+//   }
+//   append(value) {
+//     const curNode = new Node(value);
+//     if (this.head === null) {
+//       this.head = curNode;
+//       this.tail = curNode;
+//     } else {
+//       this.tail.next = curNode;
+//       this.tail = curNode;
+//     }
+//   }
+//   remove(value) {
+//     let curNode = this.head;
+//     if (curNode.value === value) {
+//       //맨 앞일 경우 헤드랑 연결끊기
+//       this.head = curNode.next;
+//     }
+//     while (curNode.next.value !== value) {
+//       if (curNode.next.next === null) {
+//         return false;
+//       }
+//       curNode = curNode.next;
+//     }
+//     if (curNode.next.next === null) {
+//       this.tail = curNode;
+//     }
+//     curNode.next = curNode.next.next; //연결끊기
+//   }
+//   print() {
+//     let curNode = this.head;
+//     while (curNode.next !== null) {
+//       console.log(curNode.value);
+//       curNode = curNode.next;
+//     }
+//     console.log(curNode.value);
+//   }
+// }
+
+// const linkedList = new LinkedList();
+// linkedList.append(10);
+// linkedList.append(9);
+// linkedList.append(8);
+// linkedList.append(7);
+// linkedList.append(6);
+// console.log(linkedList);
+// linkedList.remove(6);
+// console.log(linkedList);
+// linkedList.remove(10);
+// linkedList.print();
+
+//장르순
+//장르내 재생순
+//고유번호순 index
+// const solution = (genres, plays) => {
+//   const genreMap = new Map();
+
+//   genres.forEach((genre, index) => {
+//     const _play = plays[index];
+//     const data = genreMap.get(genre) || { total: 0, play: [] };
+//     genreMap.set(genre, {
+//       total: data.total + _play,
+//       play: [...data.play, { index, _play }]
+//         .sort((a, b) => b._play - a._play)
+//         .slice(0, 2),
+//     });
+//   });
+//   console.log(
+//     [...genreMap.entries()]
+//       .sort((a, b) => b[1].total - a[1].total)
+//       .flatMap((item, index) => item[1].play)
+//       .map((item) => item.index)
+//   );
+// };
+// solution(
+//   ["classic", "pop", "classic", "classic", "pop"],
+//   [500, 600, 150, 800, 2500]
+// );
+
+// class MinHeap {
+//   constructor() {
+//     this.heap = [null];
+//   }
+//   push(value) {
+//     this.heap.push(value);
+//     if (this.isEmpty()) return;
+
+//     let cur = this.heap.length - 1;
+//     let parent = Math.floor(cur / 2);
+//     while (parent !== 0 && this.heap[cur] > this.heap[parent]) {
+//       this.swap(parent, cur);
+//       cur = parent;
+//       parent = Math.floor(cur / 2);
+//     }
+//   }
+//   pop() {
+//     const returnValue = this.heap[1];
+//     this.heap[1] = this.heap.pop();
+//     let cur = 1;
+//     let left = 2;
+//     let right = 3;
+//     while (
+//       (this.heap[left] && this.heap[left] > this.heap[cur]) ||
+//       (this.heap[right] && this.heap[right] > this.heap[cur])
+//     ) {
+//       if (!this.heap[left]) {
+//         this.swap(right, cur);
+//         cur = right;
+//       } else if (!this.heap[right]) {
+//         this.swap(left, cur);
+//         cur = left;
+//       } else if (this.heap[left] > this.heap[right]) {
+//         this.swap(left, cur);
+//         cur = left;
+//       } else if (this.heap[right] >= this.heap[left]) {
+//         this.swap(right, cur);
+//         cur = right;
+//       }
+//       left = cur * 2;
+//       right = cur * 2 + 1;
+//     }
+//     return returnValue;
+//   }
+//   isEmpty() {
+//     return this.heap.length === 1;
+//   }
+//   swap(a, b) {
+//     [this.heap[a], this.heap[b]] = [this.heap[b], this.heap[a]];
+//   }
+// }
+
+// const solution = (N, works) => {
+//   const minHeap = new MinHeap();
+//   works.forEach((item) => minHeap.push(item));
+//   if (N >= works.reduce((acc, cur) => acc + cur, 0)) {
+//     return 0;
+//   }
+
+//   while (N > 0 && !minHeap.isEmpty()) {
+//     minHeap.push(minHeap.pop() - 1);
+//     N--;
+//   }
+
+//   return minHeap.heap.reduce((acc, cur) => acc + cur ** 2, 0);
+// };
+// console.log("solution(4, [4, 3, 3]) : ", solution(4, [4, 3, 3]));
+
+// class Node {
+//   constructor(value) {
+//     this.key = value; //합쳐진 문자
+//     this.child = new Map(); //{추가된 char : Node}  =>next의 느낌인데 char값이 있어야 받을 수 있다.
+//   }
+// }
+// class Trie {
+//   constructor() {
+//     this.root = new Node();
+//   }
+//   insert(string) {
+//     let current = this.root;
+
+//     for (const char of string) {
+//       if (!current.child.has(char)) {
+//         current.child.set(char, new Node(current.key + char));
+//       }
+//       current = current.child.get(char);
+//     }
+//   }
+//   has(string) {
+//     let current = this.root;
+//     for (const char of string) {
+//       if (!current.child.has(char)) {
+//         return false;
+//       }
+//       current = current.child.get(char);
+//     }
+//     return true;
+//   }
+// }
+
+// const trie = new Trie();
+// trie.insert("has");
+// console.log(trie);
+// console.log('trie.has("ha");: ', trie.has("ha"));
+
+// class Node {
+//   constructor(str) {
+//     this.value = str;
+//     this.count = 0;
+//     this.child = new Map();
+//   }
+// }
+// class Trie {
+//   constructor() {
+//     this.root = new Node();
+//   }
+//   insert(string) {
+//     let cur = this.root;
+
+//     for (const char of string) {
+//       if (!cur.child.has(char)) {
+//         cur.child.set(char, new Node(cur.value ? cur.value + char : "" + char));
+//       }
+//       cur = cur.child.get(char);
+//       cur.count += 1;
+//     }
+//   }
+// }
+
+// const solution = (words) => {
+//   let answer = 0;
+//   const trie = new Trie();
+//   words.forEach((item) => trie.insert(item));
+
+//   for (const string of words) {
+//     let cur = trie.root;
+//     for (const char of string) {
+//       if (cur.child.has(char)) {
+//         if (cur.count === 1) {
+//           break;
+//         }
+//         answer += 1;
+//         cur = cur.child.get(char);
+//       }
+//     }
+//   }
+//   return answer;
+// };
+// console.log(
+//   'solution(["word", "war", "warrior", "world"]): ',
+//   solution(["word", "war", "warrior", "world"])
+// );
+
+// const BinarySearch = (arr, value) => {
+//   let left = 0;
+//   let right = arr.length - 1;
+//   let mid = Math.floor((left + right) / 2);
+//   while (left < right) {
+//     if (arr[mid] === value) {
+//       return mid;
+//     }
+//     if (arr[mid] < value) {
+//       left = mid + 1;
+//     } else {
+//       right = mid - 1;
+//     }
+//     mid = Math.floor((left + right) / 2);
+//   }
+
+//   return -1;
+// };
+
+//더해서 최소값을 찾기 => 케이스양이 너무 커서 불가능
+//시간 테이블을 쭉 나열해서 그중에 맞는 시간을 찾기
+//=> 시간에 따른 인원수 파악 => 총 시간 / 걸리는 시간 = 인원
+
+// const solution = (n, times) => {
+//   const sortTime = times.sort((a, b) => a - b);
+//   let left = 1;
+//   let right = sortTime[sortTime.length - 1] * n; //최악
+//   let mid = Math.floor((left + right) / 2);
+//   let answer = right;
+
+//   while (left <= right) {
+//     let person = 0;
+//     for (const time of sortTime) {
+//       person += Math.floor(mid / time);
+//     }
+//     if (person === n) {
+//       //최소값을 구해야 하니 같을경우 mid값을 줄여나간다
+//       answer = Math.min(answer, mid);
+//       right = mid - 1;
+//     } else if (person < n) {
+//       left = mid + 1;
+//     } else {
+//       right = mid - 1;
+//     }
+
+//     mid = Math.floor((left + right) / 2);
+//   }
+//   return answer;
+// };
+// console.log("solution(6,[7,10]): ", solution(6, [7, 10]));
+
+// const FindPrime = (num) => {
+//   const prime = [false, false, ...Array(num - 1).fill(true)];
+//   for (let i = 2; i * i < num; i++) {
+//     if (prime[i]) {
+//       for (let j = i * 2; j < num; j += i) {
+//         prime[j] = false;
+//       }
+//     }
+//   }
+//   console.log(prime);
+// };
+
+// console.log("FindPrime(100): ", FindPrime(100));
+
+//그래프 문제 => 인립 리스트
+
+// class Queue {
+//   constructor() {
+//     this.queue = [];
+//     this.front = 0;
+//     this.rear = 0;
+//   }
+//   push(value) {
+//     this.queue[this.rear++] = value;
+//   }
+//   pop() {
+//     const returnValue = this.queue[this.front];
+//     delete this.queue[this.front];
+//     this.front += 1;
+//     return returnValue;
+//   }
+//   isEmpty() {
+//     return this.front === this.rear;
+//   }
+// }
+
+// const solution = (n, vertex) => {
+//   const graph = Array.from(Array(n + 1), () => []);
+//   for (const [src, dest] of vertex) {
+//     graph[src].push(dest);
+//     graph[dest].push(src);
+//     //쌍방통행
+//   }
+//   const distance = Array(n + 1).fill(0);
+//   distance[1] = 1;
+//   const queue = new Queue();
+//   queue.push(1);
+
+//   while (!queue.isEmpty()) {
+//     const cur = queue.pop();
+//     for (const dest of graph[cur]) {
+//       if (distance[dest] === 0) {
+//         queue.push(dest);
+//         distance[dest] = distance[cur] + 1;
+//       }
+//     }
+//   }
+//   console.log(distance);
+// };
+// solution(6, [
+//   [3, 6],
+//   [4, 3],
+//   [3, 2],
+//   [1, 3],
+//   [1, 2],
+//   [2, 4],
+//   [5, 2],
+// ]);
+
+// class MinHeap {
+//   constructor() {
+//     this.heap = [null];
+//   }
+//   push(value) {
+//     this.heap.push(value);
+//     if (this.heap.length === 2) return;
+
+//     let cur = this.heap.length - 1;
+//     let parent = Math.floor(cur / 2);
+
+//     while (parent !== 0 && this.heap[parent][1] > this.heap[cur][1]) {
+//       this.swap(parent, cur);
+//       cur = parent;
+
+//       parent = Math.floor(cur / 2);
+//     }
+//   }
+//   pop() {
+//     if (this.heap.length === 1) return;
+//     if (this.heap.length === 2) return this.heap.pop();
+
+//     const returnValue = this.heap[1];
+//     this.heap[1] = this.heap.pop();
+
+//     let cur = 1;
+//     let left = 2;
+//     let right = 3;
+//     while (
+//       (this.heap[left] && this.heap[left][1] < this.heap[cur][1]) ||
+//       (this.heap[right] && this.heap[right][1] < this.heap[cur][1])
+//     ) {
+//       if (!this.heap[left]) {
+//         this.swap(right, cur);
+//         cur = right;
+//       } else if (!this.heap[right]) {
+//         this.swap(left, cur);
+//         cur = left;
+//       } else if (this.heap[left][1] <= this.heap[right][1]) {
+//         this.swap(left, cur);
+//         cur = left;
+//       } else if (this.heap[left][1] > this.heap[right][1]) {
+//         this.swap(right, cur);
+//         cur = right;
+//       }
+//       left = cur * 2;
+//       right = cur * 2 + 1;
+//     }
+//     return returnValue;
+//   }
+//   swap(a, b) {
+//     [this.heap[a], this.heap[b]] = [this.heap[b], this.heap[a]];
+//   }
+// }
+
+// const solution = (N, road, K) => {
+//   const cost = Array(N + 1).fill(Infinity);
+//   const minHeap = new MinHeap();
+//   minHeap.push([1, 0]);
+//   cost[1] = 0;
+
+//   while (minHeap.heap.length !== 1) {
+//     const [cur, curcost] = minHeap.pop();
+//     for (const [src, dest, _cost] of road) {
+//       //이게 visited의 역할
+//       const nextCost = curcost + _cost;
+//       if (src === cur && cost[dest] > nextCost) {
+//         cost[dest] = nextCost;
+//         minHeap.push([dest, nextCost]);
+//       } else if (dest === cur && cost[src] > nextCost) {
+//         cost[src] = nextCost;
+//         minHeap.push([src, nextCost]);
+//       }
+//     }
+//   }
+//   return cost.filter((item) => item <= K).length;
+// };
+
+// console.log(
+//   solution(
+//     6,
+//     [
+//       [1, 2, 1],
+//       [1, 3, 2],
+//       [2, 3, 2],
+//       [3, 4, 3],
+//       [3, 5, 2],
+//       [3, 5, 3],
+//       [5, 6, 1],
+//     ],
+//     4
+//   )
+// );
+
+// class MinHeap{
+//   constructor(){
+//       this.heap = [null]
+//   }
+//   push(value){
+//       this.heap.push(value)
+//       if(this.heap.length===2) return
+
+//       let cur = this.heap.length-1
+//       let parent = Math.floor(cur/2)
+//       while(parent!==0&&this.heap[parent][1]>this.heap[cur][1]){
+//           this.swap(parent,cur)
+//           cur =parent
+//           parent=Math.floor(cur/2)
+//       }
+//   }
+//   pop(){
+//       if(this.isEmpty()) return
+//       if(this.heap.length===2) return this.heap.pop()
+
+//       const returnValue = this.heap[1]
+//       this.heap[1]=this.heap.pop()
+
+//       let cur =1
+//       let left = 2
+//       let right =3
+
+//       while (
+//       (this.heap[left] && this.heap[left][1] < this.heap[cur][1]) ||
+//       (this.heap[right] && this.heap[right][1] < this.heap[cur][1])
+//       ) {
+//               if (!this.heap[left]) {
+//               this.swap(right, cur);
+//               cur = right;
+//             } else if (!this.heap[right]) {
+//               this.swap(left, cur);
+//               cur = left;
+//             } else if (this.heap[left][1] <= this.heap[right][1]) {
+//               this.swap(left, cur);
+//               cur = left;
+//             } else if (this.heap[left][1] > this.heap[right][1]) {
+//               this.swap(right, cur);
+//               cur = right;
+//             }
+//             left = cur * 2;
+//             right = cur * 2 + 1;
+//       }
+//       return returnValue;
+//   }
+//   swap(a,b){
+//       [this.heap[a],this.heap[b]]=[this.heap[b],this.heap[a]]
+//   }
+//   isEmpty(){
+//       return this.heap.length===1
+//   }
+// }
+// const All=(arr)=>{
+//   for(const i of arr){
+//       if(!i){
+//           return false
+//       }
+//   }
+//   return true
+// }
+
+// function solution(jobs) {
+//   let curTime = 0
+//   let answer = 0
+//   const heap = new MinHeap()
+//   const Fast = jobs.sort((a,b)=>a[0]-b[0])
+//   const isDo = Array(jobs.length).fill(false)
+//   let count = 0
+
+//   while(!All(isDo)){
+//       console.log(isDo)
+//       Fast.forEach((item,index)=>{
+//           if(item[0]<=curTime){
+//               heap.push([item[0],item[1],index])
+//           }
+//       })
+//       if(heap.isEmpty()){
+//           curTime+=1
+//       }else{
+//           const [s,doTime,index] = heap.pop()
+//           curTime += doTime
+//           isDo[index]=true
+//           count++
+//           answer += curTime-s
+//       }
+//   }
+//   return answer/jobs.length
+// }
+// solution([[0, 3], [1, 9], [2, 6]])
+
+// const oper = [
+//   [1, 0],
+//   [0, 1],
+//   [-1, 0],
+//   [0, -1],
+// ];
+// const result = [];
+
+// const sum = (arr1, arr2) => {
+//   return [arr1[0] + arr2[0], arr1[1] + arr2[1]];
+// };
+
+// const dis = (arr) => {
+//   let value = 0;
+//   arr.forEach((item) => item.forEach((v) => v === 1 && value++));
+//   return value;
+// };
+
+// const Bfs = (map, visited, l) => {
+//   if (l === [map.length - 1, map[0].length - 1]) {
+//     result.push(dis(visited));
+//     return;
+//   }
+//   for (const op of oper) {
+//     const cur = sum(l, op);
+//     const copy = [];
+//     visited.forEach((item) => copy.push([...item]));
+//     if (
+//       cur[0] >= 0 &&
+//       cur[0] < map.length &&
+//       cur[1] >= 0 &&
+//       cur[1] < map[0].length
+//     ) {
+//       if (visited[cur[0]][cur[1]] === 0 && map[cur[0]][cur[1]] === 1) {
+//         copy[cur[0]][cur[1]] = 1;
+//         Bfs(map, copy, cur);
+//       }
+//     }
+//   }
+//   return;
+// };
+// function solution(maps) {
+//   const row = maps.length;
+//   const col = maps[0].length;
+//   const visited = Array.from(Array(row), () =>
+//     Array.from(Array(col), (_, i) => 0)
+//   );
+//   visited[0][0] = 1;
+//   let location = [0, 0];
+
+//   if (maps[row - 2][col - 1] === 0 && maps[row - 1][col - 2] === 0) {
+//     return -1;
+//   }
+//   Bfs(maps, visited, location);
+//   console.log(result);
+// }
+// solution([
+//   [1, 0, 1, 1, 1],
+//   [1, 0, 1, 0, 1],
+//   [1, 0, 1, 1, 1],
+//   [1, 1, 1, 0, 1],
+//   [0, 0, 0, 0, 1],
+// ]);
+
+// class Queue{
+//   constructor(){
+//       this.queue=[]
+//       this.front = 0
+//       this.rear = 0
+//   }
+//   push(v){
+//       this.queue[this.rear++]=v
+//   }
+//   pop(){
+//       const rev = this.queue[this.front]
+//       delete this.queue[this.front]
+//       this.front++
+//       return rev
+//   }
+//   isEmpty(){
+//       return this.front===this.rear
+//   }
+// }
+// function solution(maps) {
+//   if(maps[maps.length-1][maps[0].length-2]===0&&maps[maps.length-2][maps[0].length-1]===0){
+//       return -1
+//   }
+//   const visited = Array.from(Array(maps.length),()=>Array(maps[0].length).fill(0))
+//   const queue = new Queue()
+//   visited[0][0]=1
+
+//   queue.push([0,0])
+//   const col = [1,0,-1,0]
+//   const row = [0,1,0,-1]
+
+//   while(!queue.isEmpty()){
+//       const [x,y]=queue.pop()
+//       for(let i =0;i<4;i++){
+//           const mx = x+col[i]
+//           const my = y+row[i]
+
+//           if(mx>=0&&mx<maps[0].length&&my>=0&&my<maps.length){
+//               if(visited[mx][my]===0&&maps[mx][my]===1){
+//                   visited[mx][my]=visited[x][y]+1
+//                   queue.push([mx,my])
+//               }
+//           }
+//       }
+//   }
+//   console.log(visited)
+//   return visited[maps.length-1][maps[0].length-1]
+// }
+
+// const a = "abcde";
+// console.log([...a].entries());
+// for (const [index, l] of [...a].entries()) {
+//   console.log("[index,l]: ", [index, l]);
+// }
+
+class Node {
+  constructor(value = "") {
+    this.value = value;
+    this.child = new Map();
   }
-  for (let column = 0; column < n; column++) {
-    if (!visited[Row][column]) {
-      visited[Row][column] = true;
-      for (let i = 0; i < n; i++) {
-        visited[i][column] = true;
-        if (Row + i !== n && column + i !== n) {
-          visited[Row + i][column + i] = true;
-        } else if (Row + i !== n && column !== 0) {
-          visited[Row + i][column - i] = true;
-        } else if (Row !== 0 && column + i !== n) {
-          visited[Row - i][column + i] = true;
-        } else if (Row !== 0 && column !== 0) {
-          visited[Row - i][column - i] = true;
-        }
+}
+class Trie {
+  constructor() {
+    this.root = new Node();
+  }
+  insert(string) {
+    let cur = this.root;
+
+    for (const char of string) {
+      if (!cur.child.has(char)) {
+        cur.child.set(char, new Node(cur.value + char));
       }
-      BFS(visited, n, Row + 1, count + 1);
-      for (let i = 0; i < n; i++) {
-        visited[i][column] = false;
-        if (Row + i !== n && column + i !== n) {
-          visited[Row + i][column + i] = false;
-        } else if (Row + i !== n && column !== 0) {
-          visited[Row + i][column - i] = false;
-        } else if (Row !== 0 && column + i !== n) {
-          visited[Row - i][column + i] = false;
-        } else if (Row !== 0 && column !== 0) {
-          visited[Row - i][column - i] = false;
-        }
-      }
+      cur = cur.child.get(char);
     }
   }
-  return;
-};
-function solution(n) {
-  //무조건 각 줄에 한개씩
-  const visited = Array(n).fill(Array(n).fill(false));
-  BFS(visited, n, 0, 0);
+  has(string) {
+    let cur = this.root;
+
+    for (const char of string) {
+      if (!cur.child.has(char)) {
+        return false;
+      }
+      cur = cur.child.get(char);
+    }
+    return true;
+  }
+  display() {
+    let cur = this.root;
+
+    for (const key in cur.child) {
+      console.log(cur.child[key]);
+    }
+  }
 }
-solution(4);
+
+const trie = new Trie();
+trie.insert("hello");
+trie.insert("hi");
+trie.insert("hey");
