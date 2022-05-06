@@ -2122,47 +2122,265 @@
 //   console.log("[index,l]: ", [index, l]);
 // }
 
-class Node {
-  constructor(value = "") {
-    this.value = value;
-    this.child = new Map();
-  }
-}
-class Trie {
-  constructor() {
-    this.root = new Node();
-  }
-  insert(string) {
-    let cur = this.root;
+// class Node {
+//   constructor(value = "") {
+//     this.value = value;
+//     this.child = new Map();
+//   }
+// }
+// class Trie {
+//   constructor() {
+//     this.root = new Node();
+//   }
+//   insert(string) {
+//     let cur = this.root;
 
-    for (const char of string) {
-      if (!cur.child.has(char)) {
-        cur.child.set(char, new Node(cur.value + char));
-      }
-      cur = cur.child.get(char);
-    }
-  }
-  has(string) {
-    let cur = this.root;
+//     for (const char of string) {
+//       if (!cur.child.has(char)) {
+//         cur.child.set(char, new Node(cur.value + char));
+//       }
+//       cur = cur.child.get(char);
+//     }
+//   }
+//   has(string) {
+//     let cur = this.root;
 
-    for (const char of string) {
-      if (!cur.child.has(char)) {
-        return false;
-      }
-      cur = cur.child.get(char);
-    }
-    return true;
-  }
-  display() {
-    let cur = this.root;
+//     for (const char of string) {
+//       if (!cur.child.has(char)) {
+//         return false;
+//       }
+//       cur = cur.child.get(char);
+//     }
+//     return true;
+//   }
+//   display() {
+//     let cur = this.root;
 
-    for (const key in cur.child) {
-      console.log(cur.child[key]);
-    }
-  }
-}
+//     for (const key in cur.child) {
+//       console.log(cur.child[key]);
+//     }
+//   }
+// }
 
-const trie = new Trie();
-trie.insert("hello");
-trie.insert("hi");
-trie.insert("hey");
+// const trie = new Trie();
+// trie.insert("hello");
+// trie.insert("hi");
+// trie.insert("hey");
+
+// 0. 상,왼,왼대    1. 상 오 오대   2. 하 왼 왼하   3. 하 오 오하
+// const Case = {
+//   0: [
+//     [-1, 0],
+//     [0, -1],
+//     [-1, -1],
+//   ],
+//   1: [
+//     [-1, 0],
+//     [0, 1],
+//     [-1, 1],
+//   ],
+//   2: [
+//     [1, 0],
+//     [0, -1],
+//     [1, -1],
+//   ],
+//   3: [
+//     [1, 0],
+//     [0, 1],
+//     [1, 1],
+//   ],
+// };
+// const cal = (a, b) => {
+//   return [a[0] + b[0], a[1] + b[1]];
+// };
+// //1. 찾기
+// const find = (l, map, info) => {
+//   for (let op = 0; op < 4; op++) {
+//     let is = [];
+//     const arr = Case[op + ""];
+//     for (const oper of arr) {
+//       const [my, mx] = cal(l, oper);
+//       if (my >= 0 && my < map.length && mx >= 0 && mx < map[0].length) {
+//         if (map[l[0]][l[1]] !== map[my][mx]) {
+//           break;
+//         } else {
+//           is.push([my, mx]);
+//         }
+//       }
+//     }
+//     if (is.length === 3) {
+//       info.add(l.join(""));
+//       is.forEach((item) => info.add(item.join("")));
+//     }
+//   }
+// };
+// //2. 지운 곳 채우기   ("0"으로 지우고 그 자리와 맞바꾸기)(내려오는 형태이니 row만 신경쓰기 col고정)
+// //지운곳 row최소 찾고 [지워진 높이, 그 위에 있는 개수(적을경우와 많은경우)
+// const remove = (arr, map) => {
+//   arr.forEach((item) => {
+//     const [y, x] = [...item];
+//     map[y][x] = 0;
+//   });
+//   for (let i = 0; i < 5; i++) {
+//     for (let row = 0; row < map.length - 1; row++) {
+//       for (let col = 0; col < map[0].length; col++) {
+//         if (map[row + 1][col] === 0) {
+//           map[row + 1][col] = map[row][col];
+//           map[row][col] = 0;
+//         }
+//       }
+//     }
+//   }
+// };
+// //인덱스 끝이 젤 아래
+// function solution(row, col, board) {
+//   let location = [row - 1, col - 1];
+//   let B = board.map((item) => item.split(""));
+//   let answer = 0;
+//   let Info = new Set();
+//   while (true) {
+//     if (location[0] === 0 && location[1] === 0) {
+//       if (Info.size === 0) {
+//         return answer;
+//       }
+//       answer += Info.size;
+//       console.log(Info);
+//       remove(Info, B);
+//       location = [row - 1, col - 1];
+//       Info.clear();
+//     }
+//     if (B[location[0]][location[1]]) {
+//       //빈곳이 아닐때
+//       find(location, B, Info);
+//     }
+
+//     //안지워졌을 경우  //지워지면 그 자리에서 다시 탐색
+//     location[1]--; //왼으로 이동
+//     if (location[1] === -1) {
+//       //다했으면 아래칸으로 가서 다시 반복
+//       location[1] = col - 1;
+//       location[0] -= 1;
+//     }
+//   }
+// }
+
+// console.log(
+//   'solution(6, 6, ["TTTANT", "RRFACC", "RRRFCC", "TRRRAA", "TTMMMF", "TMMTTJ"]): ',
+//   solution(6, 6, ["TTTANT", "RRFACC", "RRRFCC", "TRRRAA", "TTMMMF", "TMMTTJ"])
+// );
+
+// class Queue{
+//   constructor(){
+//       this.queue=[]
+//       this.front =0
+//       this.rear = 0
+//   }
+//   push(v){
+//       this.queue[this.rear++]=v
+//   }
+//   pop(){
+//       const r = this.queue[this.front]
+//       delete this.queue[this.front]
+//       this.front+=1
+//       return r
+//   }
+//   isEmpty(){
+//       return this.front===this.rear
+//   }
+// }
+// function solution(land) {
+//   const visited = Array.from(Array(land.length),()=>Array(4).fill(0))
+//   const queue = new Queue()
+//   queue.push([0,-1,0])
+//   //[cost,col,row]
+//   while(!queue.isEmpty()){
+//       const [cost,prev,row] = queue.pop()
+//       if(row!==land.length){
+//           land[row].forEach((item,col)=>{
+//           if(prev!==col) {
+//               const nextCost = cost+item
+//               queue.push([cost+item,col,row+1])
+//               visited[row][col]=visited[row][col]?Math.max(visited[row][col],nextCost):nextCost
+//           }
+//       })
+//       }
+//   }
+//   console.log(visited)
+//   return Math.max(...visited[land.length-1])
+// }
+
+// const result = [];
+// class Trie {
+//   constructor() {
+//     this.root = new Map();
+//     this.max = 0;
+//   }
+//   init(string) {
+//     let cur = this.root;
+//     for (const char of string) {
+//       const index = char.charCodeAt() - 64;
+//       cur.set(char, index);
+//       this.max = index;
+//     }
+//   }
+//   insert(string) {
+//     this.root.set(string, ++this.max);
+//   }
+// }
+// function solution(msg) {
+//   const trie = new Trie();
+//   const answer = [];
+//   let s = msg.split("");
+//   let step = 1;
+//   trie.init("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+//   while (true) {
+//     if (s.length === 1) {
+//       answer.push(trie.root.get(s.join("")));
+//       break;
+//     }
+//     const cur = s.slice(0, step).join("");
+//     const next = s.slice(0, step + 1).join("");
+//     if (trie.root.has(cur)) {
+//       if (trie.root.has(next)) {
+//         step++;
+//       } else {
+//         trie.insert(next);
+//         answer.push(trie.root.get(cur));
+//         s = s.slice(step);
+//         step = 1;
+//       }
+//     } else {
+//       step++;
+//     }
+//   }
+//   return answer;
+// }
+// solution("KAKAO");
+
+// function solution(arr) {
+//   for (let row = 1; row < arr.length; row++) {
+//     for (let col = 1; col < arr[0].length; col++) {
+//       const Up = arr[row - 1][col];
+//       const Left = arr[row][col - 1];
+//       const Cross = arr[row - 1][col - 1];
+//       const Cur = arr[row][col];
+//       if (Cur > 0 && Up > 0 && Left > 0 && Cross > 0) {
+//         arr[row][col] = Math.min(Up, Left, Cross) + 1;
+//       } else if (Cur < 1 && Up < 1 && Left < 1 && Cross < 1) {
+//         arr[row][col] = Math.max(Up, Left, Cross) - 1;
+//       }
+//     }
+//   }
+//   console.log(arr);
+// }
+// solution([
+//   [1, 1, 1, 1, 1, 1, 1, 1],
+//   [0, 1, 1, 1, 1, 1, 1, 1],
+//   [0, 0, 0, 0, 1, 1, 1, 1],
+//   [0, 1, 0, 0, 1, 1, 1, 1],
+//   [0, 0, 0, 0, 0, 0, 1, 1],
+//   [0, 0, 0, 0, 0, 0, 0, 1],
+//   [0, 0, 0, 0, 1, 0, 0, 1],
+//   [0, 0, 0, 0, 1, 1, 1, 1],
+// ]);
