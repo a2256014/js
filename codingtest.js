@@ -2384,3 +2384,252 @@
 //   [0, 0, 0, 0, 1, 0, 0, 1],
 //   [0, 0, 0, 0, 1, 1, 1, 1],
 // ]);
+
+// class Node {
+//   constructor(v) {
+//     this.value = v;
+//     this.next = null;
+//   }
+// }
+// class LinkedList {
+//   constructor() {
+//     this.head = null;
+//     this.tail = null;
+//   }
+//   append(v) {
+//     const newNode = new Node(v);
+//     if (this.head === null) {
+//       this.head = newNode;
+//       this.tail = newNode;
+//     } else {
+//       this.tail.next = newNode;
+//       this.tail = newNode;
+//     }
+//   }
+//   remove(v) {
+//     let prevNode = this.head;
+//     if (prevNode.value === v) {
+//       this.head = prevNode.next;
+//       return;
+//     }
+//     while (prevNode.next.value !== v) {
+//       prevNode = prevNode.next;
+//     }
+//     if (prevNode.next !== null) {
+//       if (prevNode.next.next === null) this.tail = prevNode;
+//       prevNode.next = prevNode.next.next;
+//     }
+//   }
+//   find(v) {
+//     let curNode = this.head;
+//     while (curNode.value !== v) {
+//       curNode = curNode.next;
+//     }
+//     return curNode;
+//   }
+//   insert(node, v) {
+//     const newNode = new Node(v);
+//     newNode.next = node.next;
+//     node.next = newNode;
+//   }
+//   display() {
+//     let curNode = this.head;
+//     while (curNode !== null) {
+//       console.log(curNode.value);
+//       curNode = curNode.next;
+//     }
+//   }
+// }
+
+// const hash = new Map();
+// hash.set("me", 1);
+// hash.set("you", 2);
+// console.log(hash);
+// console.log(hash.values());
+// console.log(...hash.keys());
+// console.log(hash.entries()); //배열로줌
+// console.log(hash.has("me"));
+
+// class Heap {
+//   constructor() {
+//     this.heap = [null];
+//   }
+//   push(v) {
+//     this.heap.push(v);
+//     if (this.heap.length === 2) return;
+//     let cur = this.heap.length - 1;
+//     let parent = Math.floor(cur / 2);
+
+//     while (parent !== 0 && this.heap[parent] < v) {
+//       const tmp = this.heap[parent];
+//       this.heap[parent] = v;
+//       this.heap[cur] = tmp;
+
+//       cur = parent;
+//       parent = Math.floor(cur / 2);
+//     }
+//   }
+//   pop() {
+//     const R = this.heap[1];
+//     this.heap[1] = this.heap.pop();
+
+//     let cur = 1;
+//     let left = 2;
+//     let right = 3;
+//     while (
+//       (this.heap[left] && this.heap[left] > this.heap[cur]) ||
+//       (this.heap[right] && this.heap[right] > this.heap[cur])
+//     ) {
+//       if (!this.heap[left]) {
+//         this.swap(right, cur);
+//         cur = right;
+//       } else if (!this.heap[right]) {
+//         this.swap(left, cur);
+//         cur = left;
+//       } else if (this.heap[left] > this.heap[right]) {
+//         this.swap(left, cur);
+//         cur = left;
+//       } else {
+//         this.swap(right, cur);
+//         cur = right;
+//       }
+//       left = cur * 2;
+//       right = cur * 2 + 1;
+//     }
+//     return R;
+//   }
+//   swap(a, b) {
+//     [this.heap[a], this.heap[b]] = [this.heap[b], this.heap[a]];
+//   }
+// }
+// const heap = new Heap();
+// heap.push(5);
+// heap.push(9);
+// heap.push(3);
+// heap.push(10);
+// console.log(heap);
+// console.log("heap.pop(): ", heap.pop());
+// console.log("heap.pop(): ", heap.pop());
+// console.log("heap.pop(): ", heap.pop());
+// console.log("heap.pop(): ", heap.pop());
+
+// class HashNode {
+//   constructor(value = "") {
+//     this.value = value;
+//     this.next = new Map();
+//   }
+// }
+// class Trie {
+//   constructor() {
+//     this.root = new HashNode();
+//   }
+//   insert(string) {
+//     let cur = this.root;
+
+//     for (const char of string) {
+//       if (!cur.next.has(char)) {
+//         cur.next.set(char, new HashNode(cur.value + char));
+//       }
+//       cur = cur.next.get(char);
+//     }
+//   }
+// }
+// const trie = new Trie();
+// trie.insert("hello");
+// trie.insert("hi");
+// console.log(trie);
+
+//삭제 스택
+//delete로 길이 유지하고 복구할때 그 인덱스에 넣어주기
+// function solution(n, k, cmd) {
+//   let select = k;
+//   const office = Array(n).fill(true);
+//   const deleteStack = [];
+//   for (const oper of cmd) {
+//     const [op, x] = oper.split(" ");
+//     if (op === "D") {
+//       let count = x;
+//       while (count !== 0) {
+//         select += 1;
+//         if (office[select]) count--;
+//       }
+//     } else if (op === "U") {
+//       let count = x;
+//       while (count !== 0) {
+//         select -= 1;
+//         if (office[select]) count--;
+//       }
+//     } else if (op === "C") {
+//       office[select] = false;
+//       deleteStack.push(select);
+//       while (office[select] !== true) {
+//         select++;
+//       }
+//     } else {
+//       const Z = deleteStack.pop();
+//       office[Z] = true;
+//     }
+//   }
+//   console.log(office);
+// }
+// solution(8, 2, ["D 2", "C", "U 3", "C", "D 4", "C", "U 2", "Z", "Z"]);
+
+// const combi =(arr,n)=>{
+//     const result = []
+//     if(n===1){
+//         return arr.map(item=>[item])
+//     }
+//     arr.forEach((v,i,_arr)=>{
+//         const rest = _arr.slice(i+1)
+//         const com = combi(rest,n-1)
+//         const tmp = com.map(item => [v,...item])
+//         result.push(...tmp)
+//     })
+//     return result
+// }
+// const a = {}
+// const b = new Set()
+// const c = new Map()
+// class Node{
+//     constructor(value){
+//         this.value = value
+//         this.next = null
+//     }
+// }
+// class Link{
+//     constructor(){
+//         this.head = null
+//         this.tail = null
+//     }
+//     append(v){
+//         const newN = new Node(v)
+//         if(this.head===null){
+//             this.head = newN
+//             this.tail = newN
+//         }else{
+//             this.tail.next = newN
+//             this.tail = newN
+//         }
+//     }
+// }
+
+// const getPrime=(n)=>{
+//     const prime = [false,false, ...Array(n-1).fill(true)]
+//     for(let i = 2;i*i<=n;i++){
+//         if(prime[i]){
+//             for(let j =i*2;j<=n;j+=i){
+//                 prime[j]=false
+//             }
+//         }
+//     }
+//     return prime
+// }
+// const raw = "AAAAAAABBBBBCCCJDJDDDDJJJ";
+// const reg = /(.)\1*/g;
+// console.log(raw.match(reg));
+// const result = raw.match(reg).reduce((a, b) => a + `${b.length}${b[0]}`, "");
+// console.log(result);
+// console.log(result);
+
+const a = 10.123;
+console.log(a.toFixed(0));

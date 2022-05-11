@@ -32,11 +32,11 @@ const getAllFruit = () => {
 
 getAllFruit().then(console.log);
 
-getAllFruit().then((...item) => {
-  const value = document.createElement("div");
-  value.innerHTML = item;
-  value.setAttribute("id", "friut");
-  const container = document.getElementById("h");
-  console.log("container: ", container);
-  container.append(value);
-});
+// getAllFruit().then((...item) => {
+//   const value = document.createElement("div");
+//   value.innerHTML = item;
+//   value.setAttribute("id", "friut");
+//   const container = document.getElementById("h");
+//   console.log("container: ", container);
+//   container.append(value);
+// });
