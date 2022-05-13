@@ -2631,5 +2631,5 @@
 // console.log(result);
 // console.log(result);
 
-const a = 10.123;
-console.log(a.toFixed(0));
+// const a = 10.123;
+// console.log(a.toFixed(0));
