@@ -1,4 +1,4 @@
-import CartPage from "./Page/CartPage.js";
+import CartPage from "./Page/Cart/CartPage.js";
 import ProductDetailPage from "./Page/ProductDetail/ProductDetailPage.js";
 import ProductListPage from "./Page/ProductList/ProductListPage.js";
 import { init } from "./Router.js";

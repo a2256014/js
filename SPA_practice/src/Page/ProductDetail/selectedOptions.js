@@ -1,4 +1,5 @@
-import { getItem, setItem } from "../../Storage";
+import { routeChange } from "../../Router.js";
+import { getItem, setItem } from "../../Storage.js";
 
 function SelectedOptions({ $target, initialState }) {
   const $component = document.createElement("div");
@@ -83,7 +84,18 @@ function SelectedOptions({ $target, initialState }) {
     const { selectedOptions } = this.state;
     if (e.target.className === "OrderButton") {
       const cartData = getItem("products_cart", []);
-      setItem("products_cart");
+      setItem(
+        "products_cart",
+        cartData.concat(
+          selectedOptions.map((selectedOption) => ({
+            productId: selectedOption.productId,
+            optionId: selectedOption.optionId,
+            quantity: selectedOption.quantity,
+          }))
+        )
+      );
+
+      routeChange("/cart");
     }
   });
 }
