@@ -123,11 +123,12 @@
 //   q.push(q.pop());
 // }
 // console.log(q.pop());
-let fs = require("fs");
-let input = fs.readFileSync("예제.txt").toString().trim().split(" ");
 
-const gcd = (a, b) => (a % b === 0 ? b : gcd(b, a % b));
-const G = gcd(input[0] / 1, input[1] / 1);
-const L = input.reduce((acc, cur) => (acc * cur) / G, G);
 
-console.log(G, "\n", L);
+const key =[["1","2"],["3","4"]];
+key.forEach((x,i)=>{
+    x.forEach((a,j)=>{
+        if(a=="3") console.log(i,j);
+    })
+})
+

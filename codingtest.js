@@ -2633,3 +2633,13 @@
 
 // const a = 10.123;
 // console.log(a.toFixed(0));
+
+
+let dist = [];
+dist.push([1,2])
+console.log(dist);
+console.log(dist.length)
+const w = "가나다라"
+for(const a of w){
+    console.log(a);
+}
